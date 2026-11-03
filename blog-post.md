@@ -5,4 +5,3 @@ The hackathon features several tracks to accommodate various interests. The Atom
 Participants can draw inspiration from numerous proposed project ideas, including intelligent personal assistants to enhance daily tasks, automated financial services, and engaging gaming experiences using advanced AI agents. Themes such as Art and Society, Healthcare Innovation, Tooling for Developers and Security, and Gaming Revolution highlight the versatility of AI applications. The event promises to foster collaboration, showcasing the creative and technological advancements achieved during the hackathon.
 
 This initiative by Sui is a significant step towards breakthroughs in autonomous systems, creating a platform for innovators eager to explore the vast possibilities within artificial intelligence.
-```

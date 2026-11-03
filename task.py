@@ -1,24 +1,31 @@
 from crewai import Task
-from tools import tool
-from agents import blog_researcher, blog_writer
 
-research_task = Task(
-    description=(
-        "Identify the {topic}."
-        "get detailed information about the website"
-    ),
-    expected_output = "A comprehensive 3 paragraphs long report",
-    tools=[tool],
-    agent = blog_researcher,
-)
+OUTPUT_FILE = 'blog-post.md'
 
-writer_task = Task(
-    description=(
-        "get the info from the website{topic}."
-    ),
-    expected_output = "Summarize the info from website",
-    tools=[tool],
-    agent = blog_writer,
-    output_file = 'new-blog-plost.md'
-)
 
+def build_tasks(blog_researcher, blog_writer, tool):
+    research_task = Task(
+        description=(
+            "Identify the key facts about {topic}. "
+            "Get detailed information from the website, including dates, "
+            "prizes, tracks and any other relevant details."
+        ),
+        expected_output="A comprehensive 3 paragraph report of the findings",
+        tools=[tool],
+        agent=blog_researcher,
+    )
+
+    writer_task = Task(
+        description=(
+            "Using the research on {topic}, write an engaging blog post with "
+            "a title, short intro, clear headings and a closing call to action."
+        ),
+        expected_output=(
+            "A blog post in markdown. Do not wrap the output in a code fence."
+        ),
+        agent=blog_writer,
+        context=[research_task],
+        output_file=OUTPUT_FILE,
+    )
+
+    return research_task, writer_task

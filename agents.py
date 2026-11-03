@@ -1,26 +1,31 @@
 from crewai import Agent
-from tools import tool
 
-blog_researcher = Agent(
-    role = 'Blog Researcher from Website',
-    goal = 'get the relevant content for the topic {topic} from Website',
-    verbose = True,
-    memory = True,
-    backstory = (
-        "Expert in understanding data in website"
-    ),
-    tools = [tool],
-    allow_delegation = True
-)
 
-blog_writer = Agent(
-    role = 'Blog Writer',
-    goal = 'Narrate compelling story about the video {topic} from Yt channel',
-    verbose = True,
-    memory = True,
-    backstory = (
-        "Expert in simplifying complex topics."
-    ),
-    tools = [tool],
-    allow_delegation = True 
-)
+def build_agents(tool):
+    blog_researcher = Agent(
+        role='Blog Researcher',
+        goal='Gather accurate, relevant content about {topic} from the website',
+        verbose=True,
+        memory=False,
+        backstory=(
+            "You are a careful researcher who extracts facts from web pages. "
+            "You only report information that is actually found on the page "
+            "and never invent details."
+        ),
+        tools=[tool],
+        allow_delegation=False,
+    )
+
+    blog_writer = Agent(
+        role='Blog Writer',
+        goal='Write a compelling, easy-to-read blog post about {topic}',
+        verbose=True,
+        memory=False,
+        backstory=(
+            "You are an expert at simplifying complex topics for a general "
+            "audience. You write only from the research you are given."
+        ),
+        allow_delegation=False,
+    )
+
+    return blog_researcher, blog_writer
