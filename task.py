@@ -1,9 +1,6 @@
 from crewai import Task
 
-OUTPUT_FILE = 'blog-post.md'
-
-
-def build_tasks(blog_researcher, blog_writer, tool):
+def build_tasks(blog_researcher, blog_writer, tool, output_file):
     research_task = Task(
         description=(
             "Identify the key facts about {topic}. "
@@ -25,7 +22,7 @@ def build_tasks(blog_researcher, blog_writer, tool):
         ),
         agent=blog_writer,
         context=[research_task],
-        output_file=OUTPUT_FILE,
+        output_file=output_file,
     )
 
     return research_task, writer_task

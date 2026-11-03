@@ -23,7 +23,8 @@ The result is saved to `blog-post.md`. The defaults target the [Sui Agent Typhoo
 | `agents.py` | Defines the researcher and writer agents |
 | `task.py` | Defines the research and writing tasks (the writer receives the research as context) |
 | `tools.py` | Builds the `WebsiteSearchTool` restricted to one URL |
-| `blog-post.md` | Sample output from a previous run |
+| `blog-post.md` | Sample output from an earlier run |
+| `output/` | Generated posts (created on first run) |
 
 ## Setup
 
@@ -52,7 +53,9 @@ Or point it at any website and topic:
 python crew.py --url https://example.com/some-page --topic "Example topic"
 ```
 
-The final post is printed to the terminal and written to `blog-post.md`, overwriting any previous run.
+The final post is printed to the terminal and saved to `output/<topic-slug>.md` (for example `output/sui-ai-hackathon.md`), so different topics don't overwrite each other. Use `--out path/to/file.md` to choose the file yourself.
+
+The script exits with a clear message if the topic is empty, the URL isn't a valid http(s) URL, `OPENAI_API_KEY` is missing, or the crew fails.
 
 ## Customizing
 
@@ -66,4 +69,4 @@ The final post is printed to the terminal and written to `blog-post.md`, overwri
 - Add a reviewer agent that fact-checks the draft against the source page.
 - Add a general web search tool (for example `SerperDevTool`) alongside the website tool.
 - Pin dependency versions in `requirements.txt` once you have a working setup (`pip freeze`).
-- Handle pages that fail to load or return little content.
+- Detect pages that load but return little content, and stop instead of padding.
